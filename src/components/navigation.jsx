@@ -1,7 +1,10 @@
 import React from "react";
-import { LearnMoreButton } from "./LearnMoreButton";
+import { useSkylab } from "../skylab";
+import { LearnMoreButtonVariants, LearnMoreButton } from "./LearnMoreButton";
 
 export const Navigation = (props) => {
+  const { client } = useSkylab();
+  const landingPageButtonVariant = client.getVariant("landing-page-button");
 
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
@@ -59,9 +62,18 @@ export const Navigation = (props) => {
                 Team
               </a>
             </li>
-            <li>
-              <LearnMoreButton />
-            </li>
+            {landingPageButtonVariant === LearnMoreButtonVariants.CONTROL ||
+            !landingPageButtonVariant ? (
+              <li>
+                <LearnMoreButton />
+              </li>
+            ) : (
+              <li>
+                <a href="#contact" className="page-scroll">
+                  Contact
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>
