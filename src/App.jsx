@@ -9,26 +9,33 @@ import Testimonials from "./components/testimonials";
 import Team from "./components/Team";
 import Contact from "./components/contact";
 import JsonData from "./data/data.json";
+import { useSkylab, SkylabProvider } from "./skylab";
 
 export const App = () => {
-  return <Main />;
+  return (
+    <SkylabProvider user={{ user_id: "user_id" }}>
+      <Main />
+    </SkylabProvider>
+  );
 };
 
 const Main = () => {
   const landingPageData = JsonData;
-
+  const { loaded } = useSkylab();
   return (
-    <div>
-      <Navigation />
-      <Header data={landingPageData.Header} />
-      <Features data={landingPageData.Features} />
-      <About data={landingPageData.About} />
-      <Services data={landingPageData.Services} />
-      <Gallery />
-      <Testimonials data={landingPageData.Testimonials} />
-      <Team data={landingPageData.Team} />
-      <Contact data={landingPageData.Contact} />
-    </div>
+    loaded && (
+      <div>
+        <Navigation />
+        <Header data={landingPageData.Header} />
+        <Features data={landingPageData.Features} />
+        <About data={landingPageData.About} />
+        <Services data={landingPageData.Services} />
+        <Gallery />
+        <Testimonials data={landingPageData.Testimonials} />
+        <Team data={landingPageData.Team} />
+        <Contact data={landingPageData.Contact} />
+      </div>
+    )
   );
 };
 
